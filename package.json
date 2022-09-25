@@ -1,15 +1,10 @@
 {
   "name": "remote-desktop",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "node src/index.js",
-    "build": "npx pkg src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node src/server.js",
+    "build": "npx pkg src/server/server.js"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
