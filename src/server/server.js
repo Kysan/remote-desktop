@@ -54,6 +54,6 @@ app.use('/', express.static(__dirname + '/front'));
 
 
 
-const { port } = require("./../config.json")
+const { port } = require("../../config.json")
 
 server.listen(port, () => console.log(`listening on port ${port}`))
