@@ -15,15 +15,24 @@ const wsServer = new ws.Server({ server })
 const staticPath = path.join(__dirname, './../client/')
 app.use('/', express.static(staticPath));
 
+
+let intervalId;
+
 wsServer.on("connection", (socket) => {
     console.log("new connection")
 
-    setInterval(async () => {
+
+    if (intervalId) {
+        clearInterval(intervalId)
+    }
+
+    intervalId = setInterval(async () => {
         const screenshot = robot.screen.capture(0, 0, 1920, 1080)
         const img = convert(screenshot)
         const buff = await img.getBufferAsync(jimp.MIME_PNG)
         socket.send(buff.toString('base64'))
     }, 50)
+
 })
 
 
