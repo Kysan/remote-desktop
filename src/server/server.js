@@ -19,7 +19,7 @@ wsServer.on("connection", (socket) => {
     console.log("new connection")
 
     setInterval(async () => {
-        const screenshot = robot.screen.capture()
+        const screenshot = robot.screen.capture(0, 0, 1920, 1080)
         const img = convert(screenshot)
         const buff = await img.getBufferAsync(jimp.MIME_PNG)
         socket.send(buff.toString('base64'))
@@ -34,7 +34,8 @@ app.post("/input/click", (req) => {
     const { x, y, button } = req.body;
     // Accepts left, right, or middle.
     console.log({ x, y })
-    robot.moveMouseSmooth(x, y)
+    // robot.moveMouseSmooth(x, y, 10)
+    robot.moveMouse(x, y)
     robot.mouseClick("left")
 })
 
