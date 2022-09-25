@@ -78,9 +78,9 @@ const convert = (image) => {
 
 
 
-const { port } = require("../../config.json")
+const { port, interface } = require("../../config.json")
 
-server.listen(port, () => {
+server.listen(port, interface, () => {
     const { interfaces } = require("./NetworkUtils")
     console.log({ listeningPort: port, interfaces })
 })
