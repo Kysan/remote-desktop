@@ -6,21 +6,29 @@ const path = require("path")
 
 
 const app = express()
-// const server = http.createServer(app);
-// const wsServer = new ws.Server({ server })
-
-
 app.use(express.json())
+
+
+
+
+
+const server = http.createServer(app);
+const wsServer = new ws.Server({ server })
+
 const staticPath = path.join(__dirname, './../client/')
-console.log({ staticPath })
 app.use('/', express.static(staticPath));
 
-// wsServer.on("connection", (socket) => {
-//     console.log("new connection")
-// })
+wsServer.on("connection", (socket) => {
+    console.log("new connection")
+
+    setInterval(() => {
+        const screenshot = robot.screen.capture()
+
+    }, 500)
+})
 
 
-app.get("/test", (_, res) => res.send("pong"))
+app.get("/ping", (_, res) => res.send("pong"))
 
 // * mouse control
 app.post("/input/click", (req) => {
@@ -48,9 +56,6 @@ app.post("/input/scroll", (req) => {
 
 })
 
-// setInterval(() => {
-//     const screenshot = robot.screen.capture()
-// }, 50)
 
 
 
@@ -60,4 +65,4 @@ app.post("/input/scroll", (req) => {
 
 const { port } = require("../../config.json")
 
-app.listen(port, () => console.log(`listening on port ${port}`))
+server.listen(port, () => console.log(`listening on port ${port}`))
