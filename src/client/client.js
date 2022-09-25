@@ -13,7 +13,7 @@ client.onopen = () => {
 
 
     window.addEventListener("keypress", ({ key }) => {
-        fetch("input/keypress", {
+        fetch("inputé/keypress", {
 
             method: "POST",
             body: JSON.stringify({
