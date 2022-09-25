@@ -2,19 +2,25 @@ const express = require("express")
 const robot = require("robotjs")
 const http = require("http");
 const ws = require("ws")
-
+const path = require("path")
 
 
 const app = express()
-const server = http.createServer(app);
-const wsServer = new ws.Server({ server })
+// const server = http.createServer(app);
+// const wsServer = new ws.Server({ server })
 
 
-app.use(express.json)
+app.use(express.json())
+const staticPath = path.join(__dirname, './../client/')
+console.log({ staticPath })
+app.use('/', express.static(staticPath));
 
-wsServer.on("connection", (socket) => {
-    console.log("new connection")
-})
+// wsServer.on("connection", (socket) => {
+//     console.log("new connection")
+// })
+
+
+app.get("/test", (_, res) => res.send("pong"))
 
 // * mouse control
 app.post("/input/click", (req) => {
@@ -42,8 +48,6 @@ app.post("/input/scroll", (req) => {
 
 })
 
-app.use('/', express.static(__dirname + '/front'));
-
 // setInterval(() => {
 //     const screenshot = robot.screen.capture()
 // }, 50)
@@ -56,4 +60,4 @@ app.use('/', express.static(__dirname + '/front'));
 
 const { port } = require("../../config.json")
 
-server.listen(port, () => console.log(`listening on port ${port}`))
+app.listen(port, () => console.log(`listening on port ${port}`))

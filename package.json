@@ -2,7 +2,7 @@
   "name": "remote-desktop",
   "version": "1.0.0",
   "scripts": {
-    "dev": "node src/server.js",
+    "dev": "node src/server/server.js",
     "build": "npx pkg src/server/server.js"
   },
   "license": "ISC",
