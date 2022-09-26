@@ -5,14 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Remote Desktop</title>
-  </head>
-  <body>
     <style>
       body {
         margin: 0px;
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        justify-content: center;
+        background-color: red;
+      }
+
+      #screen {
+        height: auto;
+        width: auto;
+        border-radius: 10px;
+        margin: 5px;
+        border: 3px solid blue;
       }
     </style>
     <script type="module" src="./client.js"></script>
+  </head>
+  <body>
     <img id="screen" />
   </body>
 </html>

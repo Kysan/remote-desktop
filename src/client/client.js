@@ -37,7 +37,7 @@ client.onopen = () => {
     // * right click
     screen.addEventListener('contextmenu', ev => {
         ev.preventDefault();
-        const { x, y } = ev;
+        const { layerX: x, layerY: y } = ev;
 
         click(x, y, "right")
     });
@@ -45,8 +45,8 @@ client.onopen = () => {
 
     // * left click
     screen.addEventListener('click', (ev) => {
-        const { x, y, which } = ev;
-
+        const { layerX: x, layerY: y, which } = ev;
+        console.log({ ev })
         click(x, y, "left")
     })
 }
