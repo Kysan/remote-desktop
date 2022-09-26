@@ -46,8 +46,8 @@ client.onopen = () => {
         var ch = bounds.height;
         var iw = 1980; // chercher sur google dom get original image res
         var ih = 1080;
-        var px = x * iw / cw
-        var py = y * ih / ch
+        var px = Math.round(x * iw / cw)
+        var py = Math.round(y * ih / ch)
 
         click(px, py, "right")
     });
@@ -64,8 +64,8 @@ client.onopen = () => {
         var ch = bounds.height;
         var iw = 1980; // chercher sur google dom get original image res
         var ih = 1080;
-        var px = x * iw / cw
-        var py = y * ih / ch
+        var px = Math.round(x * iw / cw)
+        var py = Math.round(y * ih / ch)
 
         console.log({ px, py })
         click(px, py, "left")
