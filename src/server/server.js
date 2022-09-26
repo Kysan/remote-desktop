@@ -18,25 +18,46 @@ app.use('/', express.static(staticPath));
 
 let intervalId;
 
+let _sendScreen = (socket) => {
+    return (() => {
+        setTimeout(async () => {
+            const screenshot = robot.screen.capture(0, 0, 1920, 1080)
+            const img = convert(screenshot)
+            const buff = await img.getBufferAsync(jimp.MIME_PNG)
+            socket.send(buff.toString('base64'))
+        }, 300)
+
+    })
+}
+
+
+let sendScreen = () => { }
+
 wsServer.on("connection", (socket) => {
     console.log("new connection")
 
+    sendScreen = _sendScreen(socket)
+    sendScreen()
+    // if (intervalId) {
+    //     clearInterval(intervalId)
+    // }
 
-    if (intervalId) {
-        clearInterval(intervalId)
-    }
+    // intervalId = setInterval(async () => {
+    //     const screenshot = robot.screen.capture(0, 0, 1920, 1080)
+    //     const img = convert(screenshot)
+    //     const buff = await img.getBufferAsync(jimp.MIME_PNG)
+    //     socket.send(buff.toString('base64'))
+    // }, 50)
 
-    intervalId = setInterval(async () => {
-        const screenshot = robot.screen.capture(0, 0, 1920, 1080)
-        const img = convert(screenshot)
-        const buff = await img.getBufferAsync(jimp.MIME_PNG)
-        socket.send(buff.toString('base64'))
-    }, 50)
+
+
 
 })
 
 
-app.get("/ping", (_, res) => res.send("pong"))
+app.get("/screen", (_, res) => {
+    sendScreen()
+})
 
 // * mouse control
 app.post("/input/click", (req) => {
@@ -46,13 +67,13 @@ app.post("/input/click", (req) => {
     // robot.moveMouseSmooth(x, y, 10)
     robot.moveMouse(x, y)
     robot.mouseClick("left")
+    sendScreen()
 })
 
 // * keyboard control
 app.post("/input/keypress", (req) => {
     const { key } = req.body;
 
-    if (!"abcdefghijklmnopqrstuvwxyz0123456789".includes(key)) return;
 
     console.log({ key })
     robot.keyTap(key)
@@ -93,4 +114,6 @@ const { port, interface } = require("../../config.json")
 server.listen(port, interface, () => {
     const { interfaces } = require("./NetworkUtils")
     console.log({ listeningPort: port, interfaces })
+
+    setInterval(sendScreen, 2000)
 })

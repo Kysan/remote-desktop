@@ -44,10 +44,23 @@ client.onopen = () => {
 
 
     // * left click
-    screen.addEventListener('click', (ev) => {
-        const { layerX: x, layerY: y, which } = ev;
-        console.log({ ev })
-        click(x, y, "left")
+    screen.addEventListener('click', function (ev) {
+        let bounds = this.getBoundingClientRect();
+        var left = bounds.left;
+        var top = bounds.top;
+        var x = ev.pageX - left;
+        var y = ev.pageY - top;
+        var cw = this.clientWidth
+        var ch = this.clientHeight
+        var iw = this.naturalWidth
+        var ih = this.naturalHeight
+        var px = x / cw * iw
+        var py = y / ch * ih
+
+
+        console.log({ px, py })
+        click(px, py, "left")
+
     })
 }
 
