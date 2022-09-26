@@ -37,26 +37,35 @@ client.onopen = () => {
     // * right click
     screen.addEventListener('contextmenu', ev => {
         ev.preventDefault();
-        const { layerX: x, layerY: y } = ev;
+        const bounds = this.getBoundingClientRect();
+        var left = bounds.left;
+        var top = bounds.top;
+        var x = ev.pageX - left;
+        var y = ev.pageY - top;
+        var cw = bounds.width;
+        var ch = bounds.height;
+        var iw = 1980; // chercher sur google dom get original image res
+        var ih = 1080;
+        var px = x * iw / cw
+        var py = y * ih / ch
 
-        click(x, y, "right")
+        click(px, py, "right")
     });
 
 
     // * left click
     screen.addEventListener('click', function (ev) {
-        let bounds = this.getBoundingClientRect();
+        const bounds = this.getBoundingClientRect();
         var left = bounds.left;
         var top = bounds.top;
         var x = ev.pageX - left;
         var y = ev.pageY - top;
-        var cw = this.clientWidth
-        var ch = this.clientHeight
-        var iw = this.naturalWidth
-        var ih = this.naturalHeight
-        var px = x / cw * iw
-        var py = y / ch * ih
-
+        var cw = bounds.width;
+        var ch = bounds.height;
+        var iw = 1980; // chercher sur google dom get original image res
+        var ih = 1080;
+        var px = x * iw / cw
+        var py = y * ih / ch
 
         console.log({ px, py })
         click(px, py, "left")

@@ -66,7 +66,7 @@ app.post("/input/click", (req) => {
     console.log({ x, y })
     // robot.moveMouseSmooth(x, y, 10)
     robot.moveMouse(x, y)
-    robot.mouseClick("left")
+    robot.mouseClick(button)
     sendScreen()
 })
 
@@ -115,5 +115,5 @@ server.listen(port, interface, () => {
     const { interfaces } = require("./NetworkUtils")
     console.log({ listeningPort: port, interfaces })
 
-    setInterval(sendScreen, 2000)
+    setInterval(() => sendScreen(), 2000)
 })
